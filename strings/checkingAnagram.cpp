@@ -5,28 +5,42 @@ using namespace std;
 // but this has time complexity of n^2
 
 // two strings based on same set of alphabets is called anagram
+
 int main()
 {
     char A[] = "decimal";
     char B[] = "medical";
-    int i, H[26] = {0};
-    for (int i = 0; A[i] != '\0'; i++)
+    int H[26] = {0};
+    int i;
+
+    // Count frequency of letters in A
+    for (i = 0; A[i] != '\0'; i++)
     {
-        H[A[i] - 97] += 1;
+        H[A[i] - 'a'] += 1;
     }
-    for (int i = 0; B[i] != '\0'; i++)
+
+    // Subtract frequency using B
+    for (i = 0; B[i] != '\0'; i++)
     {
-        H[A[i] - 97] -= 1;
-        if (A[i] - 97)
+        H[B[i] - 'a'] -= 1;
+        if (H[B[i] - 'a'] < 0)
         {
             cout << "Not an anagram" << endl;
-            break;
+            return 0;
         }
     }
-    if (B[i] == '\0')
+
+    // Check all zeroes
+    for (i = 0; i < 26; i++)
     {
-        cout << "Its Anagram" << endl;
+        if (H[i] != 0)
+        {
+            cout << "Not an anagram" << endl;
+            return 0;
+        }
     }
+
+    cout << "Its an Anagram" << endl;
 
     return 0;
 }
