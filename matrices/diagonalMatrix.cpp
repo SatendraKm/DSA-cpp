@@ -1,61 +1,133 @@
 #include <stdio.h>
+#include <iostream>
 using namespace std;
 
-struct Matrix
+// struct Matrix
+// {
+//     int A[10];
+//     int n;
+// };
+
+// void Set(struct Matrix *m, int i, int j, int x)
+// {
+//     if (i == j)
+//     {
+//         m->A[i - 1] = x;
+//     }
+// }
+
+// int Get(struct Matrix m, int i, int j)
+// {
+//     if (i == j)
+//     {
+//         return m.A[i - 1];
+//     }
+//     else
+//     {
+//         return 0;
+//     }
+// }
+// void Display(struct Matrix m)
+// {
+//     int i, j;
+//     for (i = 0; i < m.n; i++)
+//     {
+//         for (j = 0; j < m.n; j++)
+//         {
+//             if (i == j)
+//             {
+//                 printf("%d ", m.A[i]);
+//             }
+//             else
+//             {
+//                 printf("0 ");
+//             }
+//         }
+//         printf("\n");
+//     }
+// }
+
+// int main()
+// {
+//     struct Matrix m;
+//     m.n = 4;
+//     Set(&m, 1, 1, 5);
+//     Set(&m, 2, 2, 8);
+//     Set(&m, 3, 3, 9);
+//     Set(&m, 4, 4, 12);
+
+//     Display(m);
+
+//     return 0;
+// }
+
+class Diagonal
 {
-    int A[10];
+private:
     int n;
+    int *A;
+
+public:
+    Diagonal();
+    Diagonal(int n);
+    ~Diagonal();
+    void Set(int i, int j, int x);
+    int Get(int i, int j);
+    void Display();
 };
-
-void Set(struct Matrix *m, int i, int j, int x)
+Diagonal::Diagonal()
 {
-    if (i == j)
-    {
-        m->A[i - 1] = x;
-    }
+    this->n = 2;
+    A = new int[2];
+}
+Diagonal::Diagonal(int n)
+{
+    this->n = n;
+    A = new int[n];
 }
 
-int Get(struct Matrix m, int i, int j)
+Diagonal::~Diagonal()
+{
+    delete[] A;
+}
+void Diagonal::Set(int i, int j, int x)
 {
     if (i == j)
-    {
-        return m.A[i - 1];
-    }
+        A[i - 1] = x;
+}
+
+int Diagonal::Get(int i, int j)
+{
+    if (i == j)
+        return A[i - 1];
     else
-    {
         return 0;
-    }
 }
-void Display(struct Matrix m)
+void Diagonal::Display()
 {
-    int i, j;
-    for (i = 0; i < m.n; i++)
+    for (int i = 0; i < n; i++)
     {
-        for (j = 0; j < m.n; j++)
+        for (int j = 0; j < n; j++)
         {
             if (i == j)
-            {
-                printf("%d ", m.A[i]);
-            }
+                cout << A[i] << " ";
             else
-            {
-                printf("0 ");
-            }
+                cout << "0 ";
         }
-        printf("\n");
+        cout << endl;
     }
 }
-
 int main()
 {
-    struct Matrix m;
-    m.n = 4;
-    Set(&m, 1, 1, 5);
-    Set(&m, 2, 2, 8);
-    Set(&m, 3, 3, 9);
-    Set(&m, 4, 4, 12);
+    Diagonal d(4);
 
-    Display(m);
+    d.Set(1, 1, 5);
+    d.Set(2, 2, 8);
+    d.Set(3, 3, 9);
+    d.Set(4, 4, 12);
+
+    cout << "Diagonal Matrix:" << endl;
+    d.Display();
 
     return 0;
 }
