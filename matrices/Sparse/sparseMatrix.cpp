@@ -148,8 +148,9 @@ private:
 public:
     Sparse(int m, int n, int num);
     ~Sparse();
-    void read();
-    void display();
+    Sparse operator+(Sparse &s);
+    friend istream &operator>>(istream &is, Sparse &s);
+    friend ostream &operator<<(ostream &os, Sparse &s);
 };
 
 Sparse::Sparse(int m, int n, int num)
@@ -164,38 +165,108 @@ Sparse::~Sparse()
 {
     delete[] ele;
 }
-void Sparse::read()
+
+Sparse Sparse::operator+(Sparse &s)
+{
+    int i, j, k;
+    i = j = k = 0;
+    if (m != s.m || n != s.n)
+    {
+        cout << "Dimensions of both the Matrix doesnt match";
+        return Sparse(0, 0, 0);
+    }
+
+    Sparse *sum = new Sparse(m, n, num + s.num);
+    while (i < num && j < s.num)
+    {
+        if (ele[i].i < s.ele[j].i)
+        {
+            sum->ele[k++] = ele[i++];
+        }
+
+        else if (ele[i].i > s.ele[j].i)
+        {
+            sum->ele[k++] = s.ele[j++];
+        }
+
+        else
+        {
+            if (ele[i].j < s.ele[j].j)
+            {
+                sum->ele[k++] = ele[i++];
+            }
+
+            else if (ele[i].j > s.ele[j].j)
+            {
+                sum->ele[k++] = s.ele[j++];
+            }
+
+            else
+            {
+                sum->ele[k] = ele[i];
+                sum->ele[k++].x = ele[i++].x + s.ele[j++].x;
+            }
+        }
+    }
+    for (; i < num; i++)
+    {
+        sum->ele[k++] = ele[i];
+    }
+    for (; j < s.num; j++)
+    {
+        sum->ele[k++] = s.ele[j];
+    }
+    sum->num = k;
+    return *sum;
+}
+
+istream &operator>>(istream &is, Sparse &s)
 {
     cout << "Enter non-zero elements: " << endl;
-    for (int i = 0; i < num; i++)
+    for (int i = 0; i < s.num; i++)
     {
-        cin >> ele[i].i >> ele[i].j >> ele[i].x;
+        is >> s.ele[i].i >> s.ele[i].j >> s.ele[i].x;
     }
+    return is;
 }
-void Sparse::display()
+
+ostream &operator<<(ostream &os, Sparse &s)
 {
     int k = 0;
     cout << "The sparse matrix is: " << endl;
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i < s.m; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < s.n; j++)
         {
-            if (ele[k].i == i && ele[k].j == j)
+            if (k < s.num && s.ele[k].i == i && s.ele[k].j == j)
             {
-                cout << ele[k++].x << " ";
+                os << s.ele[k++].x << " ";
             }
             else
             {
-                cout << "0 ";
+                os << "0 ";
             }
         }
-        cout << endl;
+        os << endl;
     }
+    return os;
 }
+
 int main()
 {
     Sparse s1(5, 5, 5);
-    s1.read();
-    s1.display();
+    Sparse s2(5, 5, 5);
+    cin >> s1;
+    cin >> s2;
+
+    Sparse sum = s1 + s2;
+
+    cout << "First Matrix:" << endl
+         << s1;
+    cout << "Second Matrix:" << endl
+         << s2;
+    cout << "Sum Matrix:" << endl
+         << sum;
+
     return 0;
 }
