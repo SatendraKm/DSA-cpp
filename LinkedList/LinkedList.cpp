@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 struct Node
 {
@@ -92,6 +93,71 @@ int Rsum(struct Node *p)
         return Rsum(p->next) + p->data;
     }
 }
+// Note: function to find the maximum element from the list
+int max(struct Node *p)
+{
+    int m = INT_MIN;
+    while (p)
+    {
+        if (p->data > m)
+        {
+            m = p->data;
+        }
+        p = p->next;
+    }
+    return m;
+}
+// Note: recursive function to get the maximum element
+int Rmax(struct Node *p)
+{
+    int x = 0;
+    if (p == 0)
+    {
+        return INT_MIN;
+    }
+    x = Rmax(p->next);
+    if (x > p->data)
+    {
+        return x;
+    }
+    else
+    {
+        return p->data;
+    }
+}
+
+// Note: function to find the minimum element from the list
+int min(struct Node *p)
+{
+    int m = INT_MAX;
+    while (p)
+    {
+        if (p->data < m)
+        {
+            m = p->data;
+        }
+        p = p->next;
+    }
+    return m;
+}
+// Note: recursive function to get the minimum element
+int Rmin(struct Node *p)
+{
+    int x = 0;
+    if (p == 0)
+    {
+        return INT_MAX;
+    }
+    x = Rmin(p->next);
+    if (x < p->data)
+    {
+        return x;
+    }
+    else
+    {
+        return p->data;
+    }
+}
 
 int main()
 {
@@ -99,6 +165,8 @@ int main()
     create(A, 5);
     printf("Length is %d\n\n", Rcount(first));
     printf("Sum is %d\n\n", Rsum(first));
+    printf("Maximum element is %d\n\n", Rmax(first));
+    printf("Minimum element is %d\n\n", Rmin(first));
 
     return 0;
 }
