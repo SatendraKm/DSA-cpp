@@ -6,7 +6,7 @@ struct Node
 {
     int data;
     struct Node *next;
-} *first;
+} *first = NULL;
 
 // Note: function to create a lined list by using the elements of an array
 void create(int A[], int n)
@@ -159,14 +159,70 @@ int Rmin(struct Node *p)
     }
 }
 
+// Note: function to perform linear search on a linked list
+struct Node *LSearch(struct Node *p, int key)
+{
+    while (p != NULL)
+    {
+        if (key == p->data)
+        {
+            return p;
+        }
+        p = p->next;
+    }
+    return NULL;
+}
+// Note: recursive function for linear search on a linked list
+struct Node *RLSearch(struct Node *p, int key)
+{
+    if (p == NULL)
+    {
+        return NULL;
+    }
+    if (key == p->data)
+    {
+        return p;
+    }
+    return RLSearch(p->next, key);
+}
+// Optimize: Move to head optimization for linear search on a linked list
+struct Node *MTFLSearch(struct Node *p, int key)
+{
+    struct Node *q = NULL;
+    while (p != NULL)
+    {
+        q = p;
+        if (key == p->data)
+        {
+            q->next = p->next;
+            p->next = first;
+            first = p;
+            return p;
+        }
+        p = p->next;
+    }
+    return NULL;
+}
+
 int main()
 {
+    struct Node *temp;
     int A[] = {3, 5, 7, 10, 15};
     create(A, 5);
     printf("Length is %d\n\n", Rcount(first));
     printf("Sum is %d\n\n", Rsum(first));
     printf("Maximum element is %d\n\n", Rmax(first));
     printf("Minimum element is %d\n\n", Rmin(first));
+    temp = MTFLSearch(first, 10);
+    if (temp)
+    {
+        printf("Key-%d is found\n", temp->data);
+    }
+    else
+    {
+        printf("Key is not found\n");
+    }
+    display(first);
 
     return 0;
 }
