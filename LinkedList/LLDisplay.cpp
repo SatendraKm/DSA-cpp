@@ -35,11 +35,21 @@ void display(struct Node *p)
     printf("\n");
 }
 
+// Note: function to display the elements of a linked list recursively
+void RDisplay(struct Node *p)
+{
+    if (p != NULL)
+    {
+        RDisplay(p->next);
+        printf("%d ", p->data);
+    }
+}
+
 int main()
 {
     int A[] = {3, 5, 7, 10, 15};
     create(A, 5);
-    display(first);
+    RDisplay(first);
 
     return 0;
 }
