@@ -6,7 +6,7 @@ struct Node
 {
     int data;
     struct Node *next;
-} *first = NULL;
+} *first = NULL, *last = NULL;
 
 // Note: function to create a lined list by using the elements of an array
 void create(int A[], int n)
@@ -231,27 +231,48 @@ void Insert(struct Node *p, int index, int x)
         p->next = t;
     }
 }
+// Note: function to insert an element always at the end of the list
+void InsertLast(int x)
+{
+    struct Node *t;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = x;
+    t->next = NULL;
+    if (first == NULL)
+    {
+        first = last = t;
+    }
+    else
+    {
+        last->next = t;
+        last = t;
+    }
+}
 
 int main()
 {
     struct Node *temp;
-    int A[] = {3, 5, 7, 10, 15};
-    create(A, 5);
-    printf("Length is %d\n\n", Rcount(first));
-    printf("Sum is %d\n\n", Rsum(first));
-    printf("Maximum element is %d\n\n", Rmax(first));
-    printf("Minimum element is %d\n\n", Rmin(first));
-    temp = MTFLSearch(first, 10);
-    if (temp)
-    {
-        printf("Key-%d is found\n", temp->data);
-    }
-    else
-    {
-        printf("Key is not found\n");
-    }
+    // int A[] = {3, 5, 7, 10, 15};
+    // create(A, 5);
+    // printf("Length is %d\n\n", Rcount(first));
+    // printf("Sum is %d\n\n", Rsum(first));
+    // printf("Maximum element is %d\n\n", Rmax(first));
+    // printf("Minimum element is %d\n\n", Rmin(first));
+    // temp = MTFLSearch(first, 10);
+    // if (temp)
+    // {
+    //     printf("Key-%d is found\n", temp->data);
+    // }
+    // else
+    // {
+    //     printf("Key is not found\n");
+    // }
+
+    InsertLast(1);
     display(first);
-    Insert(first, 0, 10);
+    InsertLast(11);
+    display(first);
+    InsertLast(22);
     display(first);
 
     return 0;
