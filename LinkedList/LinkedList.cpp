@@ -278,6 +278,36 @@ void SortedInsert(struct Node *p, int x)
         }
     }
 }
+// Note: function to delete an element from a list
+int Delete(struct Node *p, int index)
+{
+    struct Node *q = NULL;
+    int x = -1, i;
+    if (index < 1 || index > count(p))
+    {
+        return -1;
+    }
+    if (index == 1)
+    {
+        q = first;
+        x = first->data;
+        first = first->next;
+        free(q);
+        return x;
+    }
+    else
+    {
+        for (i = 0; i < index - 1; i++)
+        {
+            q = p;
+            p = p->next;
+        }
+        q->next = p->next;
+        x = p->data;
+        free(p);
+        return x;
+    }
+}
 
 int main()
 {
@@ -298,7 +328,8 @@ int main()
     //     printf("Key is not found\n");
     // }
     // InsertLast(1);
-    SortedInsert(first, 13);
+    // SortedInsert(first, 13);
+    printf("The Deleted Element is %d\n", Delete(first, 4));
     display(first);
 
     return 0;
