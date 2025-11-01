@@ -248,16 +248,46 @@ void InsertLast(int x)
         last = t;
     }
 }
+// Note: function to insert an element in a sorted linked list
+void SortedInsert(struct Node *p, int x)
+{
+    struct Node *t, *q = NULL;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = x;
+    t->next = NULL;
+    if (first == NULL)
+    {
+        first = t;
+    }
+    else
+    {
+        while (p && p->data < x)
+        {
+            q = p;
+            p = p->next;
+        }
+        if (p == first)
+        {
+            t->next = first;
+            first = t;
+        }
+        else
+        {
+            t->next = q->next;
+            q->next = t;
+        }
+    }
+}
 
 int main()
 {
-    struct Node *temp;
-    // int A[] = {3, 5, 7, 10, 15};
-    // create(A, 5);
+    int A[] = {3, 5, 7, 10, 15};
+    create(A, 5);
     // printf("Length is %d\n\n", Rcount(first));
     // printf("Sum is %d\n\n", Rsum(first));
     // printf("Maximum element is %d\n\n", Rmax(first));
     // printf("Minimum element is %d\n\n", Rmin(first));
+    // struct Node *temp;
     // temp = MTFLSearch(first, 10);
     // if (temp)
     // {
@@ -267,12 +297,8 @@ int main()
     // {
     //     printf("Key is not found\n");
     // }
-
-    InsertLast(1);
-    display(first);
-    InsertLast(11);
-    display(first);
-    InsertLast(22);
+    // InsertLast(1);
+    SortedInsert(first, 13);
     display(first);
 
     return 0;
