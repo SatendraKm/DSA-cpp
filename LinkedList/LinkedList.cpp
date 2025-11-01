@@ -308,6 +308,21 @@ int Delete(struct Node *p, int index)
         return x;
     }
 }
+// Note: to check if the linked list is sorted
+int isSorted(struct Node *p)
+{
+    int x = INT_MIN;
+    while (p != NULL)
+    {
+        if (p->data < x)
+        {
+            return 0;
+        }
+        x = p->data;
+        p = p->next;
+    }
+    return 1;
+}
 
 int main()
 {
@@ -329,7 +344,8 @@ int main()
     // }
     // InsertLast(1);
     // SortedInsert(first, 13);
-    printf("The Deleted Element is %d\n", Delete(first, 4));
+    // printf("The Deleted Element is %d\n", Delete(first, 4));
+    printf("%d\n", isSorted(first));
     display(first);
 
     return 0;
