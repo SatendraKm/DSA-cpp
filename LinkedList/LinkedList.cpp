@@ -342,12 +342,59 @@ void RemoveDuplicate(struct Node *p)
         }
     }
 }
+// Note: Array mapping function to Reverse a linked list
+void Reverse1(struct Node *p)
+{
+    int *A, i = 0;
+    struct Node *q = p;
+    A = (int *)malloc(sizeof(int) * count(p));
+    while (q != NULL)
+    {
+        A[i] = q->data;
+        q = q->next;
+        i++;
+    }
+    q = p;
+    i--;
+    while (q != NULL)
+    {
+        q->data = A[i];
+        q = q->next;
+        i--;
+    }
+}
+// Note: Sliding pointer method to reverse a linked list
+void Reverse2(struct Node *p)
+{
+    struct Node *q = NULL, *r = NULL;
+    while (p != NULL)
+    {
+        r = q;
+        q = p;
+        p = p->next;
+        q->next = r;
+    }
+    first = q;
+}
+// Note: Recursive method to reverse a linked list
+void Reverse3(struct Node *q, struct Node *p)
+{
+    if (p)
+    {
+        Reverse3(p, p->next);
+        p->next = q;
+    }
+    else
+    {
+        first = q;
+    }
+}
 
 int main()
 {
-    // int A[] = {3, 5, 7, 10, 15};
-    int A[] = {3, 3, 3, 5, 5, 7, 10, 10, 15};
-    create(A, 9);
+    int A[] = {3, 5, 7, 10, 15};
+    // int A[] = {3, 3, 3, 5, 5, 7, 10, 10, 15};
+    create(A, 5);
     // printf("Length is %d\n\n", Rcount(first));
     // printf("Sum is %d\n\n", Rsum(first));
     // printf("Maximum element is %d\n\n", Rmax(first));
@@ -366,7 +413,9 @@ int main()
     // SortedInsert(first, 13);
     // printf("The Deleted Element is %d\n", Delete(first, 4));
     // printf("%d\n", isSorted(first));
-    RemoveDuplicate(first);
+    // RemoveDuplicate(first);
+    display(first);
+    Reverse3(NULL, first);
     display(first);
 
     return 0;
