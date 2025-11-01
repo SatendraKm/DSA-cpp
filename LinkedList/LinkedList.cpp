@@ -204,6 +204,34 @@ struct Node *MTFLSearch(struct Node *p, int key)
     return NULL;
 }
 
+// Note: function to insert a new element in a Linked list
+void Insert(struct Node *p, int index, int x)
+{
+    struct Node *t;
+    if (index < 0 || index > count(p))
+    {
+        return;
+    }
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = x;
+
+    if (index == 0)
+    {
+        t->next = first;
+        first = t;
+    }
+    else
+    {
+        for (int i = 0; i < index - 1; i++)
+        {
+            p = p->next;
+        }
+
+        t->next = p->next;
+        p->next = t;
+    }
+}
+
 int main()
 {
     struct Node *temp;
@@ -222,6 +250,8 @@ int main()
     {
         printf("Key is not found\n");
     }
+    display(first);
+    Insert(first, 0, 10);
     display(first);
 
     return 0;
