@@ -6,7 +6,7 @@ struct Node
 {
     int data;
     struct Node *next;
-} *first = NULL, *last = NULL;
+} *first = NULL, *second = NULL, *third = NULL, *last = NULL;
 
 // Note: function to create a lined list by using the elements of an array
 void create(int A[], int n)
@@ -17,6 +17,24 @@ void create(int A[], int n)
     first->data = A[0];
     first->next = NULL;
     last = first;
+
+    for (i = 1; i < n; i++)
+    {
+        t = (struct Node *)malloc(sizeof(struct Node));
+        t->data = A[i];
+        t->next = NULL;
+        last->next = t;
+        last = t;
+    }
+}
+void create2(int A[], int n)
+{
+    int i;
+    struct Node *t, *last;
+    second = (struct Node *)malloc(sizeof(struct Node));
+    second->data = A[0];
+    second->next = NULL;
+    last = second;
 
     for (i = 1; i < n; i++)
     {
@@ -389,12 +407,67 @@ void Reverse3(struct Node *q, struct Node *p)
         first = q;
     }
 }
+// Note: function to add two linked list
+void Concat(struct Node *p, struct Node *q)
+{
+    third = p;
+    while (p->next != NULL)
+    {
+        p = p->next;
+    }
+    p->next = q;
+}
+
+// Note: function for merging two linked list
+void Merge(struct Node *p, struct Node *q)
+{
+    struct Node *last;
+    if (p->data < q->data)
+    {
+        third = last = p;
+        p = p->next;
+        third->next = NULL;
+    }
+    else
+    {
+        third = last = q;
+        q = q->next;
+        third->next = NULL;
+    }
+    while (p && q)
+    {
+        if (p->data < q->data)
+        {
+            last->next = p;
+            last = p;
+            p = p->next;
+            last->next = NULL;
+        }
+        else
+        {
+            last->next = q;
+            last = q;
+            q = q->next;
+            last->next = NULL;
+        }
+    }
+    if (p)
+    {
+        last->next = p;
+    }
+    if (q)
+    {
+        last->next = q;
+    }
+}
 
 int main()
 {
     int A[] = {3, 5, 7, 10, 15};
     // int A[] = {3, 3, 3, 5, 5, 7, 10, 10, 15};
     create(A, 5);
+    int B[] = {1, 2, 4, 8, 16};
+    create2(B, 5);
     // printf("Length is %d\n\n", Rcount(first));
     // printf("Sum is %d\n\n", Rsum(first));
     // printf("Maximum element is %d\n\n", Rmax(first));
@@ -414,9 +487,12 @@ int main()
     // printf("The Deleted Element is %d\n", Delete(first, 4));
     // printf("%d\n", isSorted(first));
     // RemoveDuplicate(first);
+    // Reverse3(NULL, first);
     display(first);
-    Reverse3(NULL, first);
-    display(first);
+    display(second);
+    // Concat(first, second);
+    Merge(first, second);
+    display(third);
 
     return 0;
 }
