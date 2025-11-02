@@ -460,14 +460,28 @@ void Merge(struct Node *p, struct Node *q)
         last->next = q;
     }
 }
+// Note: function to check if a linked list is having any loop or not
+int isLoop(struct Node *f)
+{
+    struct Node *p, *q;
+    p = q = f;
+    do
+    {
+        p = p->next;
+        q = q->next;
+        q = q != NULL ? q->next : q;
+    } while (p && q && p != q);
+
+    return p == q ? 1 : 0;
+}
 
 int main()
 {
     int A[] = {3, 5, 7, 10, 15};
     // int A[] = {3, 3, 3, 5, 5, 7, 10, 10, 15};
     create(A, 5);
-    int B[] = {1, 2, 4, 8, 16};
-    create2(B, 5);
+    // int B[] = {1, 2, 4, 8, 16};
+    // create2(B, 5);
     // printf("Length is %d\n\n", Rcount(first));
     // printf("Sum is %d\n\n", Rsum(first));
     // printf("Maximum element is %d\n\n", Rmax(first));
@@ -488,11 +502,11 @@ int main()
     // printf("%d\n", isSorted(first));
     // RemoveDuplicate(first);
     // Reverse3(NULL, first);
-    display(first);
-    display(second);
+    // display(first);
+    // display(second);
     // Concat(first, second);
-    Merge(first, second);
-    display(third);
+    // Merge(first, second);
+    // display(third);
 
     return 0;
 }
