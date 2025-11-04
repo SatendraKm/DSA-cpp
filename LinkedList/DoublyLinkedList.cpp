@@ -117,6 +117,22 @@ int Delete(struct Node *p, int index)
     }
     return x;
 }
+// Note: function to reverse a doubly linked list
+void Reverse(struct Node *p)
+{
+    struct Node *temp;
+    while (p != NULL)
+    {
+        temp = p->next;
+        p->next = p->prev;
+        p->prev = temp;
+        p = p->prev;
+        if (p != NULL && p->next == NULL)
+        {
+            first = p;
+        }
+    }
+}
 
 int main()
 {
@@ -124,7 +140,8 @@ int main()
     create(A, 5);
     // printf("\nLength is: %d\n", Length(first));
     // Insert(first, 2, 25);
-    printf("\nDeleted element is is: %d\n", Delete(first, 1));
+    // printf("\nDeleted element is is: %d\n", Delete(first, 1));
+    Reverse(first);
     Display(first);
     return 0;
 }
