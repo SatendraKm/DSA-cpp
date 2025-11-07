@@ -1,6 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
+using namespace std;
 
+//  ╔══════════════════════════════════════════════════════════════════════════════╗
+//  ║                          ● C program for queue ●                             ║
+//  ║                                                                              ║
+//  ║                   • implementation in plain c language •                     ║
+//  ╚══════════════════════════════════════════════════════════════════════════════╝
+
+/*
 struct Queue
 {
     int size;
@@ -62,5 +71,98 @@ int main()
     Display(q);
     printf("%d left\n", dequeue(&q));
     Display(q);
+    return 0;
+}
+*/
+
+//  ╔══════════════════════════════════════════════════════════════════════════════╗
+//  ║                          ● C++ program for queue ●                           ║
+//  ║                                                                              ║
+//  ║                          • implementation in c++ •                           ║
+//  ╚══════════════════════════════════════════════════════════════════════════════╝
+
+class Queue
+{
+private:
+    int front;
+    int rear;
+    int size;
+    int *Q;
+
+public:
+    Queue();
+    Queue(int size);
+    ~Queue();
+    void enqueue(int x);
+    int dequeue();
+    void Display();
+};
+
+Queue::Queue()
+{
+    front = rear = -1;
+    size = 10;
+    Q = new int[size];
+}
+
+Queue::Queue(int size)
+{
+    front = rear = -1;
+    this->size = size;
+    Q = new int[this->size];
+}
+
+Queue::~Queue()
+{
+    delete[] Q;
+}
+
+void Queue::enqueue(int x)
+{
+    if (rear == size - 1)
+    {
+        cout << "Queue Full";
+    }
+    else
+    {
+        rear++;
+        Q[rear] = x;
+    }
+}
+
+int Queue::dequeue()
+{
+    int x = -1;
+    if (front == rear)
+    {
+        cout << "Queue Empty";
+    }
+    else
+    {
+        x = Q[front + 1];
+        front++;
+    }
+    return x;
+}
+void Queue::Display()
+{
+    for (int i = front + 1; i < rear; i++)
+    {
+        cout << Q[i] << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    Queue q(5);
+    q.enqueue(10);
+    q.enqueue(20);
+    q.enqueue(30);
+    q.enqueue(40);
+    q.Display();
+    cout << "Element dequeued: " << q.dequeue() << endl;
+    q.Display();
+
     return 0;
 }
