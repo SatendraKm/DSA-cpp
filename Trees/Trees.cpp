@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Queue.h"
+#include "Stack.h"
 
 struct Node *root = NULL;
 
@@ -75,11 +76,83 @@ void postorder(struct Node *p)
     }
 }
 
+void Ipreorder(struct Node *p)
+{
+    struct Stack stk;
+    StackCreate(&stk, 100);
+    while (p || !isEmptyStack(stk))
+    {
+        if (p)
+        {
+            printf("%d ", p->data);
+            push(&stk, p);
+            p = p->lchild;
+        }
+        else
+        {
+            p = pop(&stk);
+            p = p->rchild;
+        }
+    }
+}
+
+void IInorder(struct Node *p)
+{
+    struct Stack stk;
+    StackCreate(&stk, 100);
+    while (p || !isEmptyStack(stk))
+    {
+        if (p)
+        {
+            push(&stk, p);
+            p = p->lchild;
+        }
+        else
+        {
+            p = pop(&stk);
+            printf("%d ", p->data);
+            p = p->rchild;
+        }
+    }
+}
+
+void IPostorder(struct Node *p)
+{
+    long temp;
+    struct Stack stk;
+    StackCreate(&stk, 100);
+
+    while (p || !isEmptyStack(stk))
+    {
+        if (p)
+        {
+            push(&stk, p);
+            p = p->lchild;
+        }
+        else
+        {
+            temp = (long)pop(&stk);
+
+            if (temp > 0)
+            {
+                push(&stk, (struct Node *)(-temp));
+                p = ((struct Node *)temp)->rchild;
+            }
+            else
+            {
+                struct Node *node = (struct Node *)(-temp);
+                printf("%d ", node->data);
+                p = NULL;
+            }
+        }
+    }
+}
+
 int main()
 {
     TreeCreate();
     printf("\nPreorder Traversal: ");
-    preorder(root);
+    IInorder(root);
     printf("\n");
     return 0;
 }
