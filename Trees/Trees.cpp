@@ -170,11 +170,41 @@ void LevelOrder(struct Node *root)
     }
 }
 
+int Count(struct Node *root)
+{
+    if (root)
+    {
+        return Count(root->lchild) + Count(root->rchild) + 1;
+    }
+    return 0;
+}
+
+int Height(struct Node *root)
+{
+    int x = 0, y = 0;
+    if (root == 0)
+    {
+        return 0;
+    }
+    x = Height(root->lchild);
+    y = Height(root->rchild);
+    if (x > y)
+    {
+        return x + 1;
+    }
+    else
+    {
+        return y + 1;
+    }
+}
+
 int main()
 {
     TreeCreate();
-    printf("\nLevelOrder Traversal: ");
-    LevelOrder(root);
+    // printf("\nLevelOrder Traversal: ");
+    // LevelOrder(root);
+    printf("\nCount: %d", Count(root));
+    printf("\nHeight: %d", Height(root));
     printf("\n");
     return 0;
 }
