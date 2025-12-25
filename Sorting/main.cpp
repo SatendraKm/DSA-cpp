@@ -145,6 +145,18 @@ void IMergeSort(int A[], int n)
     }
 }
 
+void RMergeSort(int A[], int l, int h)
+{
+    int mid;
+    if (l < h)
+    {
+        mid = (l + h) / 2;
+        RMergeSort(A, l, mid);
+        RMergeSort(A, mid + 1, h);
+        Merge(A, l, mid, h);
+    }
+}
+
 int main()
 {
     // int A[] = {11, 13, 7, 12, 16, 9, 24, 5, 10, 3, INT_MAX}, n = 11, i;  // Int_max is for quicksort algorithm
@@ -154,7 +166,8 @@ int main()
     // InsertionSort(A, n);
     // SelectionSort(A, n);
     // QuickSort(A, 0, 10);
-    IMergeSort(A, 10);
+    // IMergeSort(A, 10);
+    RMergeSort(A, 0, n - 1);
 
     for (i = 0; i < 10; i++)
     {
