@@ -107,20 +107,22 @@ public:
                         continue;
                     }
                     // condition for take
-                    int take;
+                    int take = INT_MIN;
                     int right = (i + 1 < m) ? t[i + 1][j][p] : INT_MIN;
                     int down = (j + 1 < n) ? t[i][j + 1][p] : INT_MIN;
                     int next = max(right, down);
-                    take = (next != INT_MIN) ? coins[i][j] + next : INT_MIN;
+                    if (next != INT_MIN)
+                        take = coins[i][j] + next;
 
                     // condition for skip
-                    int skip;
+                    int skip = INT_MIN;
                     if (coins[i][j] < 0 && p > 0)
                     {
                         int skipDown = (i + 1 < m) ? t[i + 1][j][p - 1] : INT_MIN;
                         int skipRight = (j + 1 < n) ? t[i][j + 1][p - 1] : INT_MIN;
                         int snext = max(skipDown, skipRight);
-                        skip = (snext != INT_MIN) ? snext : INT_MIN;
+                        if (snext != INT_MIN)
+                            skip = snext;
                     }
                     t[i][j][p] = max(take, skip);
                 }
@@ -137,7 +139,8 @@ int main()
     Solution sol;
 
     // Test Case 1
-    vector<vector<int>> coins = {{0, 1, -1}, {1, -2, 3}, {2, -3, 4}};
+    // vector<vector<int>> coins = {{0, 1, -1}, {1, -2, 3}, {2, -3, 4}};
+    vector<vector<int>> coins = {{-16, 8, -7, -19}, {6, 3, -10, 13}, {13, 15, 4, -3}, {-16, 4, 19, -12}};
     int result = sol.maximumAmount(coins);
     cout << "Test 1: " << result << endl;
     // Expected: 8
